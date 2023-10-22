@@ -1,6 +1,8 @@
 package view;
 
 import interface_adapter.clear_users.ClearController;
+import interface_adapter.clear_users.ClearState;
+import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -16,8 +18,10 @@ import java.beans.PropertyChangeListener;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sign up";
+    public final String viewName2 = "delete user";
 
     private final SignupViewModel signupViewModel;
+    private final ClearViewModel clearViewModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
@@ -30,11 +34,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     // TODO Note: this is the new JButton for clearing the users file
     private final JButton clear;
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController controller2) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel,ClearViewModel clearViewModel, ClearController controller2) {
 
         this.signupController = controller;
         this.clearController = controller2;
         this.signupViewModel = signupViewModel;
+        this.clearViewModel = clearViewModel;
         signupViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
@@ -83,8 +88,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(signUp)) {
+                        if (e.getSource().equals(clear)) {
                             clearController.execute();
+                            ClearState state = clearViewModel.getState();
+                            StringBuilder output = new StringBuilder();
+                            for (String user : state.getDelUsernames()) {
+                                output.append(user).append("\n");
+                            }
+                            JOptionPane.showMessageDialog(signUp.getTopLevelAncestor(), output);
                         }
                     }
                 }

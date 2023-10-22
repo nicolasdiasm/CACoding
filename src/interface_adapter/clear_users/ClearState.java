@@ -2,22 +2,23 @@ package interface_adapter.clear_users;
 
 // TODO Complete me
 
+import java.util.ArrayList;
+
 public class ClearState {
-    private String success = null;
-    private String error = null;
+    private ArrayList<String> delUsernames;
 
     public ClearState(ClearState copy) {
-        success = copy.success;
-        error = copy.error;
+        delUsernames = copy.delUsernames;
     }
 
     public ClearState() {}
 
-    public String getSuccess() { return success; }
+    public ArrayList<String> getDelUsernames() {
+        return delUsernames;
+    }
 
-    public String getError() { return error; }
+    public void setDelUsernames(ArrayList<String> delUsernames) {
+        this.delUsernames = delUsernames;
+    }
 
-    public void setSuccess(String success) { this.success = success; }
-
-    public void setError(String success) { this.success = success; }
 }

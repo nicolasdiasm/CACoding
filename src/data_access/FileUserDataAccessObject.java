@@ -107,17 +107,17 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     }
 
     @Override
-    public boolean isEmpty() {
-        return accounts.isEmpty();
-    }
-
-    @Override
     public ArrayList<String> getUsernames() {
         ArrayList<String> usernames =  new ArrayList<>();
         for (Map.Entry<String, User> student : accounts.entrySet()) {
             usernames.add(student.getKey());
         }
         return usernames;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return accounts.isEmpty();
     }
 
 

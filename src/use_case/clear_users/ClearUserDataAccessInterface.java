@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public interface ClearUserDataAccessInterface {
     void delete();
-    boolean isEmpty();
     ArrayList<String> getUsernames();
+
+    boolean isEmpty();
 }
