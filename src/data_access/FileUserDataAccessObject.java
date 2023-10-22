@@ -2,16 +2,19 @@ package data_access;
 
 import entity.User;
 import entity.UserFactory;
+import use_case.clear_users.ClearUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface,
+        ClearUserDataAccessInterface {
 
     private final File csvFile;
 
@@ -88,6 +91,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
     /**
      * Return whether a user exists with username identifier.
+     *
      * @param identifier the username to check.
      * @return whether a user exists with username identifier
      */
@@ -95,5 +99,26 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     public boolean existsByName(String identifier) {
         return accounts.containsKey(identifier);
     }
+
+    @Override
+    public void delete() {
+        accounts.clear();
+        save();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return accounts.isEmpty();
+    }
+
+    @Override
+    public ArrayList<String> getUsernames() {
+        ArrayList<String> usernames =  new ArrayList<>();
+        for (Map.Entry<String, User> student : accounts.entrySet()) {
+            usernames.add(student.getKey());
+        }
+        return usernames;
+    }
+
 
 }
